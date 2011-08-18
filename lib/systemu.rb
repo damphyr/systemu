@@ -1,10 +1,10 @@
 # vim: ts=2:sw=2:sts=2:et:fdm=marker
+# encoding: UTF-8
 require 'tmpdir'
 require 'socket'
 require 'fileutils'
 require 'rbconfig'
 require 'thread'
-require 'yaml'
 
 class Object
   def systemu(*a, &b) SystemUniversal.new(*a, &b).systemu end
@@ -14,7 +14,7 @@ class SystemUniversal
 #
 # constants
 #
-  SystemUniversal::VERSION = '2.2.0' unless SystemUniversal.send(:const_defined?, :VERSION)
+  SystemUniversal::VERSION = '2.3.1' unless SystemUniversal.send(:const_defined?, :VERSION)
   def SystemUniversal.version() SystemUniversal::VERSION end
   def version() SystemUniversal::VERSION end
 #
@@ -155,9 +155,8 @@ class SystemUniversal
     c['stdout'] = stdout 
     c['stderr'] = stderr 
     c['program'] = program 
-    open(config, 'w'){|f| YAML.dump c, f}
-
-    open(program, 'w'){|f| f.write child_program(config)}
+    
+    open(program, 'w'){|f| f.write child_program(c)}
 
     c
   end
@@ -172,22 +171,15 @@ class SystemUniversal
 
   def child_program config
     <<-program
+# encoding: UTF-8
       PIPE = STDOUT.dup
       begin
-        begin
-          require 'psych'
-        rescue LoadError
-        end
-        require 'yaml'
-
-        config = YAML.load(IO.read('#{ config }'))
-
-        argv = config['argv']
-        env = config['env']
-        cwd = config['cwd']
-        stdin = config['stdin']
-        stdout = config['stdout']
-        stderr = config['stderr']
+        argv = #{config['argv'].inspect}
+        env = #{config['env'].inspect}
+        cwd = #{config['cwd'].inspect}
+        stdin = '#{config['stdin']}'
+        stdout = '#{config['stdout']}'
+        stderr = '#{config['stderr']}'
 
         Dir.chdir cwd if cwd
         env.each{|k,v| ENV[k.to_s] = v.to_s} if env
