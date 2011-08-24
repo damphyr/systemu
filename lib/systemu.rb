@@ -14,7 +14,7 @@ class SystemUniversal
 #
 # constants
 #
-  SystemUniversal::VERSION = '2.3.1' unless SystemUniversal.send(:const_defined?, :VERSION)
+  SystemUniversal::VERSION = '2.4.0' unless SystemUniversal.send(:const_defined?, :VERSION)
   def SystemUniversal.version() SystemUniversal::VERSION end
   def version() SystemUniversal::VERSION end
 #
@@ -62,6 +62,7 @@ class SystemUniversal
     @ppid = getopt[ 'ppid', self.class.ppid ]
     @pid = getopt[ 'pid', self.class.pid ]
     @ruby = getopt[ 'ruby', self.class.ruby ]
+    
   end
 
   def systemu
@@ -174,6 +175,7 @@ class SystemUniversal
 # encoding: UTF-8
       PIPE = STDOUT.dup
       begin
+
         argv = #{config['argv'].inspect}
         env = #{config['env'].inspect}
         cwd = #{config['cwd'].inspect}
