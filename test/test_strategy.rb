@@ -16,9 +16,9 @@ class TestStrategy<Test::Unit::TestCase
     @c={'argv'=>['echo','check'],'env'=>nil,'cwd'=>nil,'stdin'=>stdin,'stdout'=>stdout,'stderr'=>stderr}
   end
   def test_inspect
-    assert_equal("      argv = [\"echo\", \"check\"]\n      env = nil\n      cwd = nil\n      stdin = \"./tmp/stdin\"\n      stdout = \"./tmp/stdout\"\n      stderr = \"./tmp/stderr\"\n",@sys.serialization_snippet(@c))
+    assert_equal("      argv = [\"echo\", \"check\"]\n      env = nil\n      cwd = nil\n      stdin = \"./tmp/stdin\"\n      stdout = \"./tmp/stdout\"\n      stderr = \"./tmp/stderr\"\n",@sys.serialization_snippet(@c,:inspect))
     
-    assert_equal("      argv = [\"echo\", \"check\"]\n      env = nil\n      cwd = nil\n      stdin = \"./tmp/stdin\"\n      stdout = \"./tmp/stdout\"\n      stderr = \"./tmp/stderr\"\n",@sys.choose_serialization(@tmp,@c))
+    assert_equal("      argv = [\"echo\", \"check\"]\n      env = nil\n      cwd = nil\n      stdin = \"./tmp/stdin\"\n      stdout = \"./tmp/stdout\"\n      stderr = \"./tmp/stderr\"\n",@sys.choose_serialization(@tmp,@c,:inspect))
   end
   
   def test_yaml

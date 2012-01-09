@@ -14,7 +14,7 @@ class SystemUniversal
 #
 # constants
 #
-  SystemUniversal::VERSION = '2.4.0' unless SystemUniversal.send(:const_defined?, :VERSION)
+  SystemUniversal::VERSION = '2.4.2' unless SystemUniversal.send(:const_defined?, :VERSION)
   def SystemUniversal.version() SystemUniversal::VERSION end
   def version() SystemUniversal::VERSION end
 #
@@ -26,7 +26,7 @@ class SystemUniversal
   @pid = Process.pid
   @turd = ENV['SYSTEMU_TURD']
 
-  c = ::Config::CONFIG
+  c = begin; ::RbConfig::CONFIG; rescue NameError; ::Config::CONFIG; end
   ruby = File.join(c['bindir'], c['ruby_install_name']) << c['EXEEXT']
   @ruby = if system('%s -e 42' % ruby)
     ruby
@@ -198,7 +198,7 @@ class SystemUniversal
     program
   end
   
-  def choose_serialization tmp,config,strategy=:inspect
+  def choose_serialization tmp,config,strategy
     case strategy
     when :marshal
       cfg = File.expand_path(File.join(tmp, 'config'))
@@ -218,7 +218,7 @@ class SystemUniversal
     end
     return snippet
   end
-  def serialization_snippet config,strategy=:inspect
+  def serialization_snippet config,strategy
     case strategy
     when :marshal
       snippet=<<-EOT
@@ -318,7 +318,7 @@ end
 # some monkeypatching for JRuby
 if defined? JRUBY_VERSION
   require 'jruby'
-  import org.jruby.RubyProcess
+  java_import org.jruby.RubyProcess
         
   class SystemUniversal
     def systemu
