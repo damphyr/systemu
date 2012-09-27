@@ -63,7 +63,10 @@ class SystemUniversal
     @pid = getopt[ 'pid', self.class.pid ]
     @ruby = getopt[ 'ruby', self.class.ruby ]
     
-    @strategy = getopt['strategy',:inspect]
+    @strategy = getopt['strategy',:marshal]
+    if RUBY_PLATFORM =~/win32/
+      @strategy = getopt['strategy',:inspect]
+    end
   end
 
   def systemu
