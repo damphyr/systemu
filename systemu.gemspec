@@ -3,11 +3,7 @@
 
 Gem::Specification::new do |spec|
   spec.name = "systemu"
-<<<<<<< HEAD
-  spec.version = "2.4.2"
-=======
   spec.version = "2.5.2"
->>>>>>> ahoward
   spec.platform = Gem::Platform::RUBY
   spec.summary = "systemu"
   spec.description = "description: systemu kicks the ass"
