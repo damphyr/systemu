@@ -24,9 +24,10 @@ Gem::Specification::new do |spec|
  "samples/f.rb",
  "systemu.gemspec",
  "test",
- "test/test_strategy.rb",
+ "test/strategy_test.rb",
  "test/systemu_test.rb",
- "test/testing.rb"]
+ "test/testing.rb",
+ "tmp/config"]
 
   spec.executables = []
   
